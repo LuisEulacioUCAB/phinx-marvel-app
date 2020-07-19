@@ -22,6 +22,7 @@ export function getallcharacters(state = {}, action) {
     return {
       loading: false,
       error: action.error,
+      charactersList: [],
     };
   default:
     return state;
