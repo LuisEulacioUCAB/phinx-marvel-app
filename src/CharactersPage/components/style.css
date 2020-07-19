@@ -1,0 +1,9 @@
+.ch-container{
+    width:  22.7%;
+    height: 350px;
+    margin: 15px;
+    display: inline-block;
+}
+.ch-container:hover{
+    cursor: pointer;
+}
