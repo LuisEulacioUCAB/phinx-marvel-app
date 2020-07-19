@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux';
-import {CharactersPage} from "./CharactersPage";
-import {ComicDetailsPage} from "./ComicDetailsPage";
+import {CharactersPage} from "../CharactersPage";
+import {ComicDetailsPage} from "../ComicDetailsPage";
 
 class App extends React.Component{
 
