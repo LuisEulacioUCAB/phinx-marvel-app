@@ -101,11 +101,7 @@ class CharactersPage extends React.Component{
        if(!loading && charactersList.length){
             content = (
                 <>
-                    <Header
-                        children={
-                            <SearchInput onClick={this.onClickSearchInput} onChange={this.onChangeSearchInput} value={filter.nameStartsWith}/>
-                        }
-                    />
+
                     <div style={{paddingTop:"110px"}}>
                         {
                             charactersList.map((character,key) => {
@@ -122,6 +118,11 @@ class CharactersPage extends React.Component{
         }
         return(
             <>
+                <Header
+                    children={
+                        <SearchInput onClick={this.onClickSearchInput} onChange={this.onChangeSearchInput} value={filter.nameStartsWith}/>
+                    }
+                />
             <div className={'ch-container-list'}>
                 {content}
             </div>
