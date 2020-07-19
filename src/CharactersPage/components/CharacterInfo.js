@@ -17,7 +17,7 @@ const CharacterInfo = ({ name, thumbnail }) => {
   const backgroundImage = thumbnail ? `${thumbnail.path}.${thumbnail.extension}` : '';
   return (
     <CharacterInfoContainer bgImg={backgroundImage}>
-      <CharacterName name={name} />
+          <CharacterName name={name} />
     </CharacterInfoContainer>
   );
 };
