@@ -1,6 +1,6 @@
 import md5 from 'md5';
 import { generateFilterQuery } from '../shared/utils';
-const URL = 'http://gateway.marvel.com';
+const URL = 'https://gateway.marvel.com';
 const API_PUBLIC_KEY = '2ae8f7d92f077c6b782be319622fb631';
 const API_PRIVATE_KEY = '91f10b702389e9c12acbf79d205df2696ef86ce3';
 const TS = 1;
