@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
 const ContainerLeftStyled = styled('div')`
-  width: 20%;
+  width: 25%;
   margin: auto;
   text-align: center;
 
@@ -43,7 +43,7 @@ const HeaderStyled = styled('div')`
 `;
 
 const ContainerCenterStyled = styled('div')`
-  width: 60%;
+  width: 55%;
   margin: auto;
   text-align: center;
 
