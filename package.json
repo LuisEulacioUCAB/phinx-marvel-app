@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "history": "latest",
     "html-react-parser": "^0.13.0",
     "md5": "^2.2.1",
     "moment": "^2.27.0",
@@ -23,7 +24,7 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "history": "latest"
+    "serve": "^11.3.2"
   },
   "scripts": {
     "dev": "react-scripts start",
