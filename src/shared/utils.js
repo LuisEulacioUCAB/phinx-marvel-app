@@ -31,3 +31,14 @@ export const generateFilterQuery = (filter) => {
 
   return query;
 };
+
+/**
+ * Get creator by role.
+ *
+ * @param {Array}creators - Creators Array.
+ * @param {string}role - Creator role.
+ * @returns {*} Array.
+ */
+export const getCreatorRole = (creators, role) => {
+  return creators.find((creator) => creator.role === role);
+};

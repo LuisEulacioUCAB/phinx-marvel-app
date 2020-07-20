@@ -5,6 +5,7 @@ import { alertActions } from './alert.actions';
 export const marvelActions = {
   getAllCharacters,
   getComics,
+  getComicDetails,
 };
 
 /**
@@ -17,13 +18,13 @@ export const marvelActions = {
  */
 function getAllCharacters(filter, offset, limit) {
   return (dispatch) => {
-    dispatch(request());
+    dispatch(request(filter));
     marvelService.getAllCharacters(filter, offset, limit).then(
       (characters) => {
         const {
-          data: { results: charactersList },
+          data: { results: characterList },
         } = characters;
-        dispatch(success(charactersList));
+        dispatch(success(characterList));
       },
 
       (error) => {
@@ -46,11 +47,11 @@ function getAllCharacters(filter, offset, limit) {
   /**
    * Functions for dispatch success.
    *
-   * @param {object}charactersList - Object.
+   * @param {object}characterList - Object.
    * @returns {{charactersList: *, type: string}} Object.
    */
-  function success(charactersList) {
-    return { type: marvelConstants.GET_ALL_CHARACTERS_SUCCESS, charactersList };
+  function success(characterList) {
+    return { type: marvelConstants.GET_ALL_CHARACTERS_SUCCESS, characterList };
   }
 
   /**
@@ -65,9 +66,63 @@ function getAllCharacters(filter, offset, limit) {
 }
 
 /**
- * Get comic by id.
+ * Get comic by comic id.
  *
- * @param {string}id - Comic id.
+ * @param {number}id - Comic id.
+ * @returns {function(...[*]=)} Object.
+ */
+function getComicDetails(id) {
+  return (dispatch) => {
+    dispatch(request(id));
+    marvelService.getComicDetails(id).then(
+      (comicDetails) => {
+        const {
+          data: { results: comic },
+        } = comicDetails;
+        dispatch(success(comic));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error));
+      },
+    );
+  };
+
+  /**
+   * Function for dispatch request.
+   *
+   * @param {number}id - Id.
+   * @returns {{id: *, type: string}} Object.
+   */
+  function request(id) {
+    return { type: marvelConstants.GET_COMIC_DETAILS_REQUEST, id };
+  }
+
+  /**
+   * Function for dispatch success.
+   *
+   * @param {object}comic - Comic Details.
+   * @returns {{type: string, comicsList: *}} Object.
+   */
+  function success(comic) {
+    return { type: marvelConstants.GET_COMIC_DETAILS_SUCCESS, comic };
+  }
+
+  /**
+   * Function for dispatch failure.
+   *
+   * @param {object}error - Object message error.
+   * @returns {{type: string, error: *}} Object.
+   */
+  function failure(error) {
+    return { type: marvelConstants.GET_COMIC_DETAILS_FAILURE, error };
+  }
+}
+
+/**
+ * Get comic by character id.
+ *
+ * @param {number}id - Character id.
  * @returns {function(...[*]=)} Object.
  */
 function getComics(id) {
@@ -90,7 +145,7 @@ function getComics(id) {
   /**
    * Function for dispatch request.
    *
-   * @param {string}id - Id.
+   * @param {number}id - Id.
    * @returns {{id: *, type: string}} Object.
    */
   function request(id) {

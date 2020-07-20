@@ -10,11 +10,14 @@ import { marvelConstants } from '../shared/marvel.constants';
 export function getcomics(state = {}, action) {
   switch (action.type) {
   case marvelConstants.GET_COMICS_REQUEST:
-    return {};
+    return {
+      comicsList: [],
+    };
   case marvelConstants.GET_COMICS_SUCCESS:
     return { comicsList: action.comicsList };
   case marvelConstants.GET_COMICS_FAILURE:
     return {
+      comicsList: [],
       error: action.error,
     };
   default:

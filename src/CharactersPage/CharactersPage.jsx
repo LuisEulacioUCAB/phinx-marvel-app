@@ -1,19 +1,19 @@
 import React from 'react';
 import { marvelActions } from '../_actions/marvel.actions';
 import { connect } from 'react-redux';
-import { CharacterContainer } from './components/CharacterContainer';
-import './CharactersPage.css';
 import { Loader } from '../_components/Loader';
 import { CharacterInfoDialog } from './components/dialog/CharacterInfoDialog';
 import * as R from 'ramda';
 import { SearchInput } from '../_components/SearchInput';
 import { Header } from '../_components/Header';
-
+import { CharacterListView } from './components/characters/CharacterListView';
+import { ContainerPrincipal } from '../_components/ContainerPrincipal';
+import { PropTypes } from 'prop-types';
 class CharactersPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      charactersList: [],
+      characterList: [],
       loading: true,
       isOpenCharacterInfoDialog: false,
       filter: {
@@ -34,10 +34,11 @@ class CharactersPage extends React.Component {
     const { filter, offset, limit } = this.state;
     this.props.dispatch(marvelActions.getAllCharacters(filter, offset, limit));
   };
-  componentWillReceiveProps = (nextProps) => {
+
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
     if (nextProps.getallcharacters) {
-      const { charactersList, loading } = nextProps.getallcharacters;
-      setTimeout(() => this.setState({ charactersList, loading }), 3000);
+      const { characterList, loading } = nextProps.getallcharacters;
+      setTimeout(() => this.setState({ characterList, loading }), 3000);
     }
 
     if (nextProps.getcomics) {
@@ -82,49 +83,30 @@ class CharactersPage extends React.Component {
   };
 
   render() {
-    const {
-      loading,
-      charactersList,
-      isOpenCharacterInfoDialog,
-      characterData,
-      filter,
-    } = this.state;
+    const { loading, characterList, isOpenCharacterInfoDialog, characterData, filter } = this.state;
     let content = <Loader />;
 
-    if (!loading && charactersList.length) {
+    if (!loading && characterList.length) {
       content = (
-        <>
-          <div style={{ paddingTop: '110px' }}>
-            {charactersList.map((character, key) => {
-              return (
-                <CharacterContainer
-                  key={key}
-                  character={character}
-                  onClick={this.onOpenCharacterInfoDialog}
-                />
-              );
-            })}
-          </div>
-          <CharacterInfoDialog
-            onClose={this.onCloseCharacterInfoDialog}
-            isOpen={isOpenCharacterInfoDialog}
-            character={characterData}
-          />
-        </>
+        <CharacterListView onClick={this.onOpenCharacterInfoDialog} characterList={characterList} />
       );
     }
+
     return (
       <>
-        <Header
-          children={
-            <SearchInput
-              onClick={this.onClickSearchInput}
-              onChange={this.onChangeSearchInput}
-              value={filter.nameStartsWith}
-            />
-          }
+        <Header>
+          <SearchInput
+            onClick={this.onClickSearchInput}
+            onChange={this.onChangeSearchInput}
+            value={filter.nameStartsWith}
+          />
+        </Header>
+        <ContainerPrincipal>{content}</ContainerPrincipal>
+        <CharacterInfoDialog
+          onClose={this.onCloseCharacterInfoDialog}
+          isOpen={isOpenCharacterInfoDialog}
+          character={characterData}
         />
-        <div className={'ch-container-list'}>{content}</div>
       </>
     );
   }
@@ -143,5 +125,12 @@ function mapStateToProps(state) {
     getcomics,
   };
 }
+
+CharactersPage.propTypes = {
+  getcomics: PropTypes.object.isRequired,
+  getallcharacters: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
 const connectedApp = connect(mapStateToProps)(CharactersPage);
 export { connectedApp as CharactersPage };

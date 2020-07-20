@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^7.2.1",
     "html-react-parser": "^0.13.0",
     "md5": "^2.2.1",
+    "moment": "^2.27.0",
     "prop-types": "latest",
     "ramda": "^0.27.0",
     "react": "^16.13.1",
@@ -69,7 +70,7 @@
     }
   },
   "lint-staged": {
-    "*.js" : [
+    "*.{js,jsx}": [
       "prettier --write",
       "eslint --fix",
       "git add"

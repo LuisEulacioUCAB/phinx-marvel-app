@@ -9,6 +9,7 @@ const HASH = md5(`${TS}${API_PRIVATE_KEY}${API_PUBLIC_KEY}`);
 export const marvelService = {
   getAllCharacters,
   getComics,
+  getComicDetails,
 };
 
 /**
@@ -36,9 +37,9 @@ function getAllCharacters(filter, offset, limit) {
 }
 
 /**
- * Get comics by id.
+ * Get comics by Character id.
  *
- * @param {number}id - Comic id.
+ * @param {number}id - Character id.
  * @returns {Promise<Response>} Promise.
  */
 function getComics(id) {
@@ -63,4 +64,21 @@ function handleResponse(response) {
     return Promise.reject(response.json());
   }
   return response.json();
+}
+
+/**
+ * Get comics by id.
+ *
+ * @param {number}id - Comic id.
+ * @returns {Promise<Response>} Promise.
+ */
+function getComicDetails(id) {
+  const requestOptions = {
+    method: 'GET',
+  };
+  //"http://gateway.marvel.com/v1/public/characters/1011334/comics"
+  return fetch(
+    URL + `/v1/public/comics/${id}?apikey=${API_PUBLIC_KEY}&ts=${TS}&hash=${HASH}`,
+    requestOptions,
+  ).then(handleResponse);
 }

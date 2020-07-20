@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { CloseButtonDialog } from './CloseButtonDialog';
 import { ComicInfo } from './ComicInfo';
 import { Loader } from '../../../_components/Loader';
+import { marvelConstants } from '../../../shared/marvel.constants';
 
 const ContainerStyled = styled('div')`
   display: ${(props) => (props.isOpen ? 'block' : 'none')};
@@ -24,6 +25,7 @@ const ModalContainerStyled = styled('div')`
   width: 50%;
   border-radius: 4px;
   height: 400px;
+  box-shadow: 0px 2px 13px #000000;
 
   @media screen and (max-width: 1024px) {
     & {
@@ -46,7 +48,7 @@ const ModalContainerData = styled('div')`
   overflow: auto;
 `;
 export const CharacterInfoDialog = ({ isOpen, onClose, character }) => {
-  const name = character ? character.name : 'Not Found';
+  const name = character ? character.name : marvelConstants.NOT_AVAILABLE;
   const comicsList = character && character.comicsList ? character.comicsList : [];
   return (
     <ContainerStyled isOpen={isOpen} onClick={onClose} id={'modal-container'}>

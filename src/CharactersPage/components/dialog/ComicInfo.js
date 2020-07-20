@@ -2,15 +2,27 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { PropTypes } from 'prop-types';
 import { ReduceTextWithViewMoreLink } from '../../../_components/ReduceTextWithViewMoreLink';
+import { marvelConstants } from '../../../shared/marvel.constants';
+import { Link } from 'react-router-dom';
 
-const TitleStyled = styled('div')`
-    font-weight:bold;
-    font-size: 18px;
-    
-    @media screen and (max-width: 1024px) {
-    &{
-        padding-top:10px;
+const TitleStyled = styled(Link)`
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  color: black;
+
+  @media screen and (max-width: 1024px) {
+    & {
+      padding-top: 10px;
     }
+  }
+  &:visit {
+    color: black;
+  }
+
+  &:hover {
+    color: #3eb7f9 !important;
+  }
 `;
 const DescriptionStyled = styled('div')`
   font-size: 16px;
@@ -56,11 +68,10 @@ const ComicImageStyled = styled('img')`
 `;
 
 const ComicInfo = ({ comic }) => {
-  const urlImage =
-    comic.images && comic.images.length
-      ? `${comic.images[0].path}.${comic.images[0].extension}`
-      : 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg';
-  const title = comic.title ? comic.title : 'Not Available';
+  const urlImage = comic.thumbnail
+    ? `${comic.thumbnail.path}.${comic.thumbnail.extension}`
+    : marvelConstants.IMAGE_NOT_FOUND;
+  const title = comic.title ? comic.title : marvelConstants.NOT_AVAILABLE;
 
   const description = comic.description ? (
     <ReduceTextWithViewMoreLink
@@ -70,7 +81,7 @@ const ComicInfo = ({ comic }) => {
       linkText={'View More...'}
     />
   ) : (
-    'Not Available'
+    marvelConstants.NOT_AVAILABLE
   );
   return (
     <>
@@ -79,7 +90,7 @@ const ComicInfo = ({ comic }) => {
           <ComicImageStyled src={urlImage} alt={title} />
         </ContainerImageStyled>
         <ContainerInfoStyled>
-          <TitleStyled>{title}</TitleStyled>
+          <TitleStyled to={`/comic/${comic.id}`}>{title}</TitleStyled>
           <DescriptionStyled>{description}</DescriptionStyled>
         </ContainerInfoStyled>
       </ContainerComicStyled>
