@@ -10,7 +10,7 @@ const ContainerSearchInputStyled = styled('div')`
 `;
 
 const InputSearchStyled = styled('input')`
-  width: 80%;
+  width: 90%;
   border: 1px solid #aaaaaa;
   padding-left: 10px;
   cursor: ${(props) => (props.disabled ? 'no-drop' : 'text')};
@@ -30,6 +30,12 @@ const ButtonSearchStyled = styled('button')`
   font-size: 20px;
   &:focus {
     outline: none;
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      margin-left: 8px;
+    }
   }
 `;
 

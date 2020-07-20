@@ -10,21 +10,71 @@ const ContainerComicDetailsStyled = styled('div')`
   width: 100%;
   height: 100vh;
   padding-top: 150px;
+  
+    @media screen and (max-width: 480px) {
+    & {
+        display: block;
+        
+    }
+  }
+  
+    @media (min-width: 481px) and (max-width: 768px) {
+    & {
+         display: block;
+
+    }
 `;
 
 const ContainerImageStyled = styled('div')`
   width: 45%;
   padding-left: 5%;
+  
+  @media screen and (max-width: 480px) {
+    & {
+        width: 90%;
+        padding: 0 5%;
+    }
+  }
+  
+    @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      width: 90%;
+        padding:5%;
+    }
 `;
 
 const ContainerDetailsStyled = styled('div')`
   width: 45%;
   padding-right: 5%;
   padding-left: 30px;
+    @media screen and (max-width: 480px) {
+    & {
+        width: 90%;
+        padding:5%;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      width: 90%;
+        padding:5%;
+    }
+
 `;
 
 const ImageStyled = styled('img')`
   width: 100%;
+  
+  @media screen and (max-width: 480px) {
+    & {
+        width: 100%;
+    }
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      width: 100%;
+    }
 `;
 
 const TextStyled = styled('div')`

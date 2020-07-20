@@ -7,6 +7,29 @@ const ContainerLeftStyled = styled('div')`
   width: 20%;
   margin: auto;
   text-align: center;
+
+  @media screen and (max-width: 480px) {
+    & {
+      width: 25% !important;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      width: 25%;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    & {
+      width: 25%;
+    }
+  }
+  @media (min-width: 1025px) and (max-width: 1200px) {
+    & {
+      width: 25%;
+    }
+  }
 `;
 
 const HeaderStyled = styled('div')`
@@ -23,6 +46,29 @@ const ContainerCenterStyled = styled('div')`
   width: 60%;
   margin: auto;
   text-align: center;
+
+  @media screen and (max-width: 480px) {
+    & {
+      width: 55% !important;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      width: 55%;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    & {
+      width: 55%;
+    }
+  }
+  @media (min-width: 1025px) and (max-width: 1200px) {
+    & {
+      width: 55%;
+    }
+  }
 `;
 
 const ContainerRightStyled = styled('div')`
@@ -33,7 +79,32 @@ const ContainerRightStyled = styled('div')`
 
 const BrandStyled = styled('img')`
   width: 165px;
-  height: 65px;
+  height: 40px;
+  position: relative;
+  top: 2px;
+
+  @media screen and (max-width: 480px) {
+    & {
+      width: 85px;
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      width: 90px;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    & {
+      width: 125px;
+    }
+  }
+  @media (min-width: 1025px) and (max-width: 1200px) {
+    & {
+      width: 130px;
+    }
+  }
 `;
 
 const Header = ({ children, childrenRight }) => {

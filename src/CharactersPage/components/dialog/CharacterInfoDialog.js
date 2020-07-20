@@ -27,11 +27,25 @@ const ModalContainerStyled = styled('div')`
   height: 400px;
   box-shadow: 0px 2px 13px #000000;
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 480px) {
     & {
-      width: 60% !important;
+        width: 85%;
+        height: 90%
     }
   }
+  
+   @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      width: 85%;
+      height: 80%
+    }
+  }
+  
+    @media (min-width: 769px) and (max-width: 1024px) {
+    & {
+      width: 85%;
+      height: 70%
+    }
 `;
 
 const CharacterNameStyled = styled('p')`
@@ -44,8 +58,25 @@ const CharacterNameStyled = styled('p')`
 
 const ModalContainerData = styled('div')`
   height: 300px;
-  max-height: 300px;
   overflow: auto;
+  
+  @media screen and (max-width: 480px) {
+    & {
+        height: 90%;
+    }
+  }
+  
+  @media (min-width: 481px) and (max-width: 768px) {
+    & {
+      height: 80%;
+    }
+  }
+  
+    @media (min-width: 769px) and (max-width: 1024px) {
+    & {
+      width: 100%;
+      height: 70%
+    }
 `;
 export const CharacterInfoDialog = ({ isOpen, onClose, character }) => {
   const name = character ? character.name : marvelConstants.NOT_AVAILABLE;

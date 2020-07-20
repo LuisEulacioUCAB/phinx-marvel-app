@@ -11,13 +11,22 @@ const TitleStyled = styled(Link)`
   text-decoration: none;
   color: black;
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 768px) {
     & {
       padding-top: 10px;
     }
   }
   &:visit {
     color: black;
+  }
+
+  @media screen and (max-width: 480px) {
+    & {
+      width: 85px;
+      height: 40px;
+      position: relative;
+      top: 2px;
+    }
   }
 
   &:hover {
@@ -31,7 +40,7 @@ const DescriptionStyled = styled('div')`
 const ContainerImageStyled = styled('div')`
   width: 35%;
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 768px) {
     & {
       width: 100% !important;
     }
@@ -42,7 +51,7 @@ const ContainerInfoStyled = styled('div')`
     width: 65%;
     padding-left: 10px;
     padding-right: 10px;
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 768px) {
     &{
         width: 100%!important;
        
@@ -51,16 +60,16 @@ const ContainerInfoStyled = styled('div')`
 `;
 
 const ContainerComicStyled = styled('div')`
-    display: flex;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-bottom: 2rem;
-        @media screen and (max-width: 1024px) {
-    &{
-        display: block;
- 
+  display: flex;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: 768px) {
+    & {
+      display: block;
     }
-   
+  }
 `;
 
 const ComicImageStyled = styled('img')`
