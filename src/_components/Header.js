@@ -85,7 +85,7 @@ const BrandStyled = styled('img')`
 
   @media screen and (max-width: 480px) {
     & {
-      width: 85px;
+      width: 55px;
     }
   }
 
