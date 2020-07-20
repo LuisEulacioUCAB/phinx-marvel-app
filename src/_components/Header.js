@@ -36,7 +36,7 @@ const BrandStyled = styled('img')`
   height: 65px;
 `;
 
-const Header = ({ children }) => {
+const Header = ({ children, childrenRight }) => {
   return (
     <HeaderStyled>
       <ContainerLeftStyled>
@@ -48,17 +48,19 @@ const Header = ({ children }) => {
         </Link>
       </ContainerLeftStyled>
       <ContainerCenterStyled>{children}</ContainerCenterStyled>
-      <ContainerRightStyled></ContainerRightStyled>
+      <ContainerRightStyled>{childrenRight}</ContainerRightStyled>
     </HeaderStyled>
   );
 };
 
 Header.defaultProps = {
   children: <div></div>,
+  childrenRight: <div></div>,
 };
 
 Header.propTypes = {
   children: PropTypes.element,
+  childrenRight: PropTypes.element,
 };
 
 export { Header };

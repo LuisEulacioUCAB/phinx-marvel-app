@@ -6,6 +6,7 @@ import { Header } from '../_components/Header';
 import { ComicDetailsView } from './components/ComicDetailsView';
 import { ContainerPrincipal } from '../_components/ContainerPrincipal';
 import { PropTypes } from 'prop-types';
+import { ButtonBack } from '../_components/ButtonBack';
 
 class ComicDetailsPage extends React.Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class ComicDetailsPage extends React.Component {
 
     return (
       <>
-        <Header />
+        <Header childrenRight={<ButtonBack history={this.props.history} />} />
         <ContainerPrincipal>{content}</ContainerPrincipal>
       </>
     );
@@ -66,6 +67,7 @@ ComicDetailsPage.propTypes = {
   match: PropTypes.object.isRequired,
   getcomicdetails: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export { connectedApp as ComicDetailsPage };

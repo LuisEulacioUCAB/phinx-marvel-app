@@ -78,14 +78,18 @@ class CharactersPage extends React.Component {
   onClickSearchInput = () => {
     const { offset, limit, filter } = this.state;
     const loading = true;
-    this.setState({ loading });
-    this.props.dispatch(marvelActions.getAllCharacters(filter, offset, limit));
+    const characterList = []; // Prevent resend search
+
+    if (filter.nameStartsWith && filter.nameStartsWith.length) {
+      this.setState({ loading, characterList });
+      this.props.dispatch(marvelActions.getAllCharacters(filter, offset, limit));
+    }
   };
 
   render() {
     const { loading, characterList, isOpenCharacterInfoDialog, characterData, filter } = this.state;
     let content = <Loader />;
-
+    const disabledSearch = !characterList.length;
     if (!loading && characterList.length) {
       content = (
         <CharacterListView onClick={this.onOpenCharacterInfoDialog} characterList={characterList} />
@@ -99,6 +103,7 @@ class CharactersPage extends React.Component {
             onClick={this.onClickSearchInput}
             onChange={this.onChangeSearchInput}
             value={filter.nameStartsWith}
+            disabled={disabledSearch}
           />
         </Header>
         <ContainerPrincipal>{content}</ContainerPrincipal>
