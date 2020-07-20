@@ -44,7 +44,6 @@ class ButtonBack extends React.Component {
 
   render() {
     const { openTooltip } = this.state;
-    console.log('tst');
     return (
       <>
         <ContainerButtonStyled>

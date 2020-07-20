@@ -2,7 +2,7 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import styled from '@emotion/styled';
 import { creatorRoles } from '../../shared/role.constants';
-import { getCreatorRole } from '../../shared/utils';
+import { getCreatorRole, getDate, formatDate } from '../../shared/utils';
 import { marvelConstants } from '../../shared/marvel.constants';
 
 const ContainerComicDetailsStyled = styled('div')`
@@ -50,7 +50,8 @@ const ComicDetailsView = ({ data }) => {
     : null;
   const description = data.description ? data.description : marvelConstants.NOT_AVAILABLE;
   const title = data.title ? data.title : marvelConstants.NOT_AVAILABLE;
-  //TODO : Array image with pagination
+  const published = data.dates ? getDate(data.dates, marvelConstants.COMIC_PUBLISHED) : null;
+
   return data ? (
     <>
       <ContainerComicDetailsStyled>
@@ -61,6 +62,13 @@ const ComicDetailsView = ({ data }) => {
           <TextStyled fontWeight={'bold'} fontSize={'25px'} marginBottom={'1.5em'}>
             {title}
           </TextStyled>
+
+          <TextStyled fontWeight={'bold'} fontSize={'18px'}>
+            {`Published: ${
+              published ? formatDate(published.date, 'll') : marvelConstants.NOT_AVAILABLE
+            }`}
+          </TextStyled>
+
           <TextStyled fontWeight={'bold'} fontSize={'18px'}>
             {`Writter: ${writter ? writter.name : marvelConstants.NOT_AVAILABLE}`}
           </TextStyled>

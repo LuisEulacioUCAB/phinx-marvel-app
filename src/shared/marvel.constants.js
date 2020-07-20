@@ -13,4 +13,6 @@ export const marvelConstants = {
 
   NOT_AVAILABLE: 'Not Available',
   IMAGE_NOT_FOUND: 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg',
+
+  COMIC_PUBLISHED: 'digitalPurchaseDate',
 };

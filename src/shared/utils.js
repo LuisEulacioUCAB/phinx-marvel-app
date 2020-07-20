@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /**
  * Reduce amount word on texts and add link for view comic details .
  *
@@ -41,4 +43,26 @@ export const generateFilterQuery = (filter) => {
  */
 export const getCreatorRole = (creators, role) => {
   return creators.find((creator) => creator.role === role);
+};
+
+/**
+ * Get date by type.
+ *
+ * @param {Array}dates - Dates array.
+ * @param {string}type - Date type.
+ * @returns {*}Object.
+ */
+export const getDate = (dates, type) => {
+  return dates.find((date) => date.type === type);
+};
+
+/**
+ * Format date.
+ *
+ * @param {string}date - Date to format.
+ * @param {string}format - Format.
+ * @returns {string} Date formatted.
+ */
+export const formatDate = (date, format) => {
+  return moment(date).format(format);
 };
