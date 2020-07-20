@@ -3,9 +3,9 @@ import { PropTypes } from 'prop-types';
 import { CharacterInfo } from './CharacterInfo';
 import styled from '@emotion/styled';
 const ContainerCharacterStyled = styled('div')`
-  width: 22.5%;
+  width: 22%;
   height: 350px;
-  margin: 15px;
+  margin: 1.5%;
   display: inline-block;
 
   &:hover {
@@ -29,13 +29,6 @@ const ContainerCharacterStyled = styled('div')`
   @media (min-width: 769px) and (max-width: 1024px) {
     & {
       width: 30%;
-      margin: 1.5%;
-    }
-  }
-
-  @media (min-width: 1025px) and (max-width: 1200px) {
-    & {
-      width: 22%;
       margin: 1.5%;
     }
   }
