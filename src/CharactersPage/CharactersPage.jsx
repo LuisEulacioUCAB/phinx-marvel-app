@@ -35,7 +35,13 @@ class CharactersPage extends React.Component {
   }
 
   componentDidMount = () => {
-    const { filter, offset, limit } = this.state;
+    const { filter, limit } = this.state;
+    const currentPage = JSON.parse(localStorage.getItem('currentPage'));
+    const offset = currentPage ? ( currentPage - 1) * limit : R.clone(this.state.offset);
+    if(currentPage){
+      this.setState({currentPage});
+    }
+
     this.props.dispatch(marvelActions.getAllCharacters(filter, offset, limit));
   };
 
@@ -94,10 +100,15 @@ class CharactersPage extends React.Component {
   onPageChange = (currentPage)=>{
 
     const {filter, limit} = this.state;
-    const offset = currentPage * limit;
+    const offset = (currentPage - 1) * limit;
     const loading = true;
     this.setState({currentPage, loading}, ()=>this.props.dispatch(marvelActions.getAllCharacters(filter, offset, limit)));
-    //TODO :Save in local storage initial Page
+
+    // Save current page
+    localStorage.setItem('currentPage', currentPage);
+
+
+
   };
 
   render() {
