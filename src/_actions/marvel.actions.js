@@ -24,7 +24,11 @@ function getAllCharacters(filter, offset, limit) {
         const {
           data: { results: characterList },
         } = characters;
-        dispatch(success(characterList));
+        const data = {
+          characterList,
+          total : characters.data.total
+        };
+        dispatch(success(data));
       },
 
       (error) => {
@@ -50,8 +54,8 @@ function getAllCharacters(filter, offset, limit) {
    * @param {object}characterList - Object.
    * @returns {{charactersList: *, type: string}} Object.
    */
-  function success(characterList) {
-    return { type: marvelConstants.GET_ALL_CHARACTERS_SUCCESS, characterList };
+  function success(data) {
+    return { type: marvelConstants.GET_ALL_CHARACTERS_SUCCESS, data };
   }
 
   /**
