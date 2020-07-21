@@ -12,18 +12,24 @@ export function getallcharacters(state = {}, action) {
   case marvelConstants.GET_ALL_CHARACTERS_REQUEST:
     return {
       loading: true,
-      characterList: [],
+      data: {
+        characterList : [],
+        total:0
+      },
     };
   case marvelConstants.GET_ALL_CHARACTERS_SUCCESS:
     return {
       loading: false,
-      characterList: action.characterList,
+      data: action.data,
     };
   case marvelConstants.GET_ALL_CHARACTERS_FAILURE:
     return {
       loading: false,
       error: action.error,
-      characterList: [],
+      data: {
+        characterList : [],
+        total:0
+      },
     };
   default:
     return state;

@@ -8,7 +8,9 @@ import { SearchInput } from '../_components/SearchInput';
 import { Header } from '../_components/Header';
 import { CharacterListView } from './components/characters/CharacterListView';
 import { ContainerPrincipal } from '../_components/ContainerPrincipal';
-import { PropTypes } from 'prop-types';
+import PropTypes  from 'prop-types';
+import {PaginationComponent} from '../_components/PaginationComponent';
+
 class CharactersPage extends React.Component {
   constructor(props) {
     super(props);
@@ -25,20 +27,29 @@ class CharactersPage extends React.Component {
         name: '',
         comicsList: [],
       },
+      currentPage : 1,
+      total:0
     };
 
     this.onChangeSearchInput = this.onChangeSearchInput.bind(this);
   }
 
   componentDidMount = () => {
-    const { filter, offset, limit } = this.state;
+    const { filter, limit } = this.state;
+    const currentPage = JSON.parse(localStorage.getItem('currentPage'));
+    const offset = currentPage ? ( currentPage - 1) * limit : R.clone(this.state.offset);
+    if(currentPage){
+      this.setState({currentPage});
+    }
+
     this.props.dispatch(marvelActions.getAllCharacters(filter, offset, limit));
   };
 
   UNSAFE_componentWillReceiveProps = (nextProps) => {
     if (nextProps.getallcharacters) {
-      const { characterList, loading } = nextProps.getallcharacters;
-      setTimeout(() => this.setState({ characterList, loading }), 3000);
+      const { data, loading } = nextProps.getallcharacters;
+      const {characterList, total} = data;
+      setTimeout(() => this.setState({ characterList, loading ,total }), 3000);
     }
 
     if (nextProps.getcomics) {
@@ -86,13 +97,42 @@ class CharactersPage extends React.Component {
     }
   };
 
+  onPageChange = (currentPage)=>{
+
+    const {filter, limit} = this.state;
+    const offset = (currentPage - 1) * limit;
+    const loading = true;
+    this.setState({currentPage, loading}, ()=>this.props.dispatch(marvelActions.getAllCharacters(filter, offset, limit)));
+
+    // Save current page
+    localStorage.setItem('currentPage', currentPage);
+
+
+
+  };
+
   render() {
-    const { loading, characterList, isOpenCharacterInfoDialog, characterData, filter } = this.state;
+    const {
+      loading,
+      characterList,
+      isOpenCharacterInfoDialog,
+      characterData,
+      filter,
+      total,
+      currentPage,
+      limit
+    } = this.state;
     let content = <Loader />;
     const disabledSearch = !characterList.length;
     if (!loading && characterList.length) {
       content = (
-        <CharacterListView onClick={this.onOpenCharacterInfoDialog} characterList={characterList} />
+        <>
+          <CharacterListView
+            onClick={this.onOpenCharacterInfoDialog}
+            characterList={characterList}
+          />
+
+        </>
       );
     }
 
@@ -106,11 +146,20 @@ class CharactersPage extends React.Component {
             disabled={disabledSearch}
           />
         </Header>
-        <ContainerPrincipal>{content}</ContainerPrincipal>
+        <ContainerPrincipal>
+          {content}
+          <PaginationComponent
+            onChange={this.onPageChange}
+            currentPage	={currentPage}
+            total={total}
+            pageSize={limit}
+          />
+        </ContainerPrincipal>
         <CharacterInfoDialog
           onClose={this.onCloseCharacterInfoDialog}
           isOpen={isOpenCharacterInfoDialog}
           character={characterData}
+
         />
       </>
     );
