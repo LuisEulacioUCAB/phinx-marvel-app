@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types';
 import { ReduceTextWithViewMoreLink } from '../../../_components/ReduceTextWithViewMoreLink';
 import { marvelConstants } from '../../../shared/marvel.constants';
 import { Link } from 'react-router-dom';
+import {Favorite} from '../../../_components/Favorite';
 
 const TitleStyled = styled(Link)`
   font-weight: bold;
@@ -39,7 +40,7 @@ const DescriptionStyled = styled('div')`
 
 const ContainerImageStyled = styled('div')`
   width: 35%;
-
+  position:relative;
   @media screen and (max-width: 768px) {
     & {
       width: 100% !important;
@@ -64,7 +65,7 @@ const ContainerComicStyled = styled('div')`
   padding-left: 15px;
   padding-right: 15px;
   margin-bottom: 2rem;
-
+  position:relative;
   @media screen and (max-width: 768px) {
     & {
       display: block;
@@ -76,7 +77,7 @@ const ComicImageStyled = styled('img')`
   width: 100%;
 `;
 
-const ComicInfo = ({ comic }) => {
+const ComicInfo = ({ comic , favorite , onFavoriteClick, isShowFavorite}) => {
   const urlImage = comic.thumbnail
     ? `${comic.thumbnail.path}.${comic.thumbnail.extension}`
     : marvelConstants.IMAGE_NOT_FOUND;
@@ -97,18 +98,38 @@ const ComicInfo = ({ comic }) => {
       <ContainerComicStyled>
         <ContainerImageStyled>
           <ComicImageStyled src={urlImage} alt={title} />
+          {isShowFavorite ? (
+            <Favorite
+                onFavoriteClick={onFavoriteClick}
+                data={comic}
+                favorite={favorite}
+                type={marvelConstants.COMIC_TYPE}
+              /> 
+            ):null
+          }
+          
         </ContainerImageStyled>
         <ContainerInfoStyled>
           <TitleStyled to={`/comic/${comic.id}`}>{title}</TitleStyled>
           <DescriptionStyled>{description}</DescriptionStyled>
         </ContainerInfoStyled>
+
       </ContainerComicStyled>
     </>
   );
 };
 
+ComicInfo.defaultProps = {
+  favorite: {},
+  onFavoriteClick: null,
+  isShowFavorite: true,
+};
+
 ComicInfo.propTypes = {
   comic: PropTypes.object.isRequired,
+  favorite: PropTypes.object,
+  onFavoriteClick: PropTypes.func,
+  isShowFavorite: PropTypes.bool
 };
 
 export { ComicInfo };

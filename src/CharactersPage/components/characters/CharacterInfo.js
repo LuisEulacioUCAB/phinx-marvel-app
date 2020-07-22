@@ -2,6 +2,9 @@ import { PropTypes } from 'prop-types';
 import React from 'react';
 import styled from '@emotion/styled';
 import { CharacterName } from './CharacterName';
+import {Favorite} from '../../../_components/Favorite';
+import {marvelConstants} from '../../../shared/marvel.constants';
+import { ContainerCharacter } from './ContainerCharacter';
 
 const CharacterInfoContainer = styled('div')`
   background-image: ${(props) => (props.bgImg ? `url(${props.bgImg})` : '')};
@@ -13,18 +16,39 @@ const CharacterInfoContainer = styled('div')`
   background-size: cover;
 `;
 
-const CharacterInfo = ({ name, thumbnail }) => {
-  const backgroundImage = thumbnail ? `${thumbnail.path}.${thumbnail.extension}` : '';
+const CharacterInfo = ({ character, onFavoriteClick,favorite, isShowFavorite}) => {
+  const backgroundImage = character.thumbnail ? `${character.thumbnail.path}.${character.thumbnail.extension}` : '';
   return (
-    <CharacterInfoContainer bgImg={backgroundImage}>
-      <CharacterName name={name} />
+    <CharacterInfoContainer bgImg={backgroundImage} id={marvelConstants.CONTAINER_CHARACTER_ID}>
+      {
+        isShowFavorite ? (
+          <Favorite
+            type={marvelConstants.CHARACTER_TYPE}
+            onFavoriteClick={onFavoriteClick}
+            data={character}
+            favorite={favorite}
+          />
+        ) :null
+      }
+
+      <CharacterName name={character.name} />
     </CharacterInfoContainer>
   );
 };
 
+CharacterInfo.defaultProps = {
+  onFavoriteClick : null,
+  favorite : {},
+  isShowFavorite: true
+
+};
+
 CharacterInfo.propTypes = {
-  name: PropTypes.string.isRequired,
-  thumbnail: PropTypes.object.isRequired,
+  character: PropTypes.object.isRequired,
+  favorite: PropTypes.object,
+  onFavoriteClick: PropTypes.func,
+  isShowFavorite:PropTypes.bool,
+
 };
 
 export { CharacterInfo };
