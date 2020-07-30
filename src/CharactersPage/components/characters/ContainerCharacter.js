@@ -2,6 +2,9 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { CharacterInfo } from './CharacterInfo';
 import styled from '@emotion/styled';
+import { marvelConstants } from '../../../shared/marvel.constants';
+import { CharacterListView } from './CharacterListView';
+
 const ContainerCharacterStyled = styled('div')`
   width: 22%;
   height: 350px;
@@ -34,17 +37,33 @@ const ContainerCharacterStyled = styled('div')`
   }
 `;
 
-const ContainerCharacter = ({ character, onClick }) => {
+const ContainerCharacter = ({ character, onClick , onFavoriteClick , favorite ,isShowFavorite}) => {
   return (
-    <ContainerCharacterStyled onClick={() => onClick(character)}>
-      <CharacterInfo name={character.name} thumbnail={character.thumbnail} />
+    <ContainerCharacterStyled onClick={(event) => onClick(event,character)}>
+      <CharacterInfo
+        character={character}
+        onFavoriteClick={onFavoriteClick}
+        favorite={favorite}
+        isShowFavorite={isShowFavorite}
+      />
     </ContainerCharacterStyled>
   );
 };
 
+ContainerCharacter.defaultProps = {
+  onFavoriteClick : null,
+  favorite : {},
+  isShowFavorite: true
+
+};
+
 ContainerCharacter.propTypes = {
   character: PropTypes.object.isRequired,
+  favorite: PropTypes.object,
   onClick: PropTypes.func.isRequired,
+  onFavoriteClick: PropTypes.func,
+  isShowFavorite:PropTypes.bool,
+
 };
 
 export { ContainerCharacter };

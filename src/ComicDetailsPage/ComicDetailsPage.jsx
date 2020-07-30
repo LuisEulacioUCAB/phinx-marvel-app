@@ -6,7 +6,7 @@ import { Header } from '../_components/Header';
 import { ComicDetailsView } from './components/ComicDetailsView';
 import { ContainerPrincipal } from '../_components/ContainerPrincipal';
 import { PropTypes } from 'prop-types';
-import { ButtonBack } from '../_components/ButtonBack';
+import { BackButton } from '../_components/BackButton';
 
 class ComicDetailsPage extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ class ComicDetailsPage extends React.Component {
 
     return (
       <>
-        <Header childrenRight={<ButtonBack history={this.props.history} />} />
+        <Header childrenRight={<BackButton history={this.props.history} />} />
         <ContainerPrincipal>{content}</ContainerPrincipal>
       </>
     );

@@ -18,9 +18,9 @@ const TooltipStyled = styled('span')`
   visibility: ${(props) => props.visibility};
 `;
 
-const Tooltip = ({ text, visibility }) => {
+const Tooltip = ({ text, visibility , ...rest}) => {
   const visibilityValue = visibility ? 'visible' : 'hidden';
-  return <TooltipStyled visibility={visibilityValue}>{text}</TooltipStyled>;
+  return <TooltipStyled visibility={visibilityValue} {...rest}>{text}</TooltipStyled>;
 };
 
 Tooltip.propTypes = {

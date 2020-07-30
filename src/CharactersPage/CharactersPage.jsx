@@ -10,6 +10,10 @@ import { CharacterListView } from './components/characters/CharacterListView';
 import { ContainerPrincipal } from '../_components/ContainerPrincipal';
 import PropTypes  from 'prop-types';
 import {PaginationComponent} from '../_components/PaginationComponent';
+import {marvelConstants} from '../shared/marvel.constants';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
+import {ActionButton} from '../_components/ActionButton';
+
 
 class CharactersPage extends React.Component {
   constructor(props) {
@@ -28,7 +32,11 @@ class CharactersPage extends React.Component {
         comicsList: [],
       },
       currentPage : 1,
-      total:0
+      total:0,
+      favorite :{
+        comic: [],
+        character: []
+      }
     };
 
     this.onChangeSearchInput = this.onChangeSearchInput.bind(this);
@@ -36,11 +44,17 @@ class CharactersPage extends React.Component {
 
   componentDidMount = () => {
     const { filter, limit } = this.state;
-    const currentPage = JSON.parse(localStorage.getItem('currentPage'));
+    const currentPage = localStorage.getItem('currentPage') ?
+      JSON.parse(localStorage.getItem('currentPage')) :
+      R.clone(this.state.currentPage);
+
+    const favorite = localStorage.getItem('favorite') ?
+      JSON.parse(localStorage.getItem('favorite')) :
+      R.clone(this.state.favorite);
+
     const offset = currentPage ? ( currentPage - 1) * limit : R.clone(this.state.offset);
-    if(currentPage){
-      this.setState({currentPage});
-    }
+
+    this.setState({currentPage, favorite});
 
     this.props.dispatch(marvelActions.getAllCharacters(filter, offset, limit));
   };
@@ -60,18 +74,21 @@ class CharactersPage extends React.Component {
     }
   };
 
-  onOpenCharacterInfoDialog = (character) => {
-    const isOpenCharacterInfoDialog = true;
-    const { id } = character;
-    const { characterData } = this.state;
-    characterData.name = character ? character.name : '';
-    this.props.dispatch(marvelActions.getComics(id));
-    this.setState({ isOpenCharacterInfoDialog, characterData });
+  onOpenCharacterInfoDialog = (event,character) => {
+
+    if(event.target.id === marvelConstants.CONTAINER_CHARACTER_ID){
+      const isOpenCharacterInfoDialog = true;
+      const { id } = character;
+      const { characterData } = this.state;
+      characterData.name = character ? character.name : '';
+      this.props.dispatch(marvelActions.getComics(id));
+      this.setState({ isOpenCharacterInfoDialog, characterData });
+    }
   };
 
   onCloseCharacterInfoDialog = (event) => {
     const id = event.target.id;
-    if (id === 'close-modal' || id === 'modal-container') {
+    if (id === marvelConstants.CLOSE_MODAL_ID || id === marvelConstants.CONTAINER_MODAL_ID) {
       const isOpenCharacterInfoDialog = false;
       const characterData = R.clone(this.state.characterData);
       characterData.name = '';
@@ -106,9 +123,27 @@ class CharactersPage extends React.Component {
 
     // Save current page
     localStorage.setItem('currentPage', currentPage);
+  };
 
 
+  onFavoriteClick = (data, type) => {
+    const favorite = localStorage.getItem('favorite') ?
+      JSON.parse(localStorage.getItem('favorite')) :
+      R.clone(this.state.favorite);
 
+    const findObj = favorite[type].find((fav) => fav.id === data.id);// For dont repeat favorite
+
+    if(!findObj){
+      favorite[type].push(data);
+
+    }else{
+      const pos = favorite[type].findIndex((fav) => fav.id === data.id);
+      favorite[type] = favorite[type].slice(0,pos);
+
+    }
+
+    localStorage.setItem('favorite', JSON.stringify(favorite));
+    this.setState({favorite});
   };
 
   render() {
@@ -120,9 +155,10 @@ class CharactersPage extends React.Component {
       filter,
       total,
       currentPage,
-      limit
+      limit,
+      favorite
     } = this.state;
-    let content = <Loader />;
+    let content = <Loader/>;
     const disabledSearch = !characterList.length;
     if (!loading && characterList.length) {
       content = (
@@ -130,6 +166,8 @@ class CharactersPage extends React.Component {
           <CharacterListView
             onClick={this.onOpenCharacterInfoDialog}
             characterList={characterList}
+            onFavoriteClick={this.onFavoriteClick}
+            favorite={favorite}
           />
 
         </>
@@ -138,7 +176,9 @@ class CharactersPage extends React.Component {
 
     return (
       <>
-        <Header>
+        <Header
+          childrenRight={<ActionButton text={'Favorite'} link={'/favorite'} fontIcon={faStar}/>}
+        >
           <SearchInput
             onClick={this.onClickSearchInput}
             onChange={this.onChangeSearchInput}
@@ -159,8 +199,9 @@ class CharactersPage extends React.Component {
           onClose={this.onCloseCharacterInfoDialog}
           isOpen={isOpenCharacterInfoDialog}
           character={characterData}
-
-        />
+          onFavoriteClick={this.onFavoriteClick}
+          favorite={favorite}
+      />
       </>
     );
   }

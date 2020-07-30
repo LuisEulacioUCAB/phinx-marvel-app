@@ -24,7 +24,7 @@ const ContainerButtonStyled = styled('div')`
   position: relative;
 `;
 
-class ButtonBack extends React.Component {
+class BackButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,8 +60,8 @@ class ButtonBack extends React.Component {
   }
 }
 
-ButtonBack.propTypes = {
+BackButton.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-export { ButtonBack };
+export { BackButton };

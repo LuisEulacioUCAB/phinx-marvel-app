@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CharactersPage } from '../CharactersPage';
 import { ComicDetailsPage } from '../ComicDetailsPage';
+import { MarvelFavoritePage} from '../MarvelFavoritePage';
 import { history } from '../shared/history';
 
 class App extends React.Component {
@@ -14,6 +15,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={CharactersPage} />
             <Route exact path="/comic/:id" component={ComicDetailsPage} />
+            <Route exact path="/favorite" component={MarvelFavoritePage} />
           </Switch>
         </Router>
       </div>

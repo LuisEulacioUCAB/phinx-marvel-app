@@ -15,4 +15,14 @@ export const marvelConstants = {
   IMAGE_NOT_FOUND: 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg',
 
   COMIC_PUBLISHED: 'digitalPurchaseDate',
+
+  ADD_FAVORITE_COLOR : '#ffc107',
+  REMOVE_FAVORITE_COLOR : 'white',
+
+  CHARACTER_TYPE : 'character',
+  COMIC_TYPE : 'comic',
+
+  CLOSE_MODAL_ID : 'close-modal',
+  CONTAINER_MODAL_ID : 'container-modal',
+  CONTAINER_CHARACTER_ID : 'container-character',
 };

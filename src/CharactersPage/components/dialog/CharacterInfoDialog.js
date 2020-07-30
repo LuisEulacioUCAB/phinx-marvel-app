@@ -19,7 +19,7 @@ const ContainerStyled = styled('div')`
   background-color: rgba(0, 0, 0, 0.4);
 `;
 const ModalContainerStyled = styled('div')`
-  background-color: white;
+  background-color: #f5f5f5;
   margin: 10% auto;
   border: 1px solid #888;
   width: 50%;
@@ -78,30 +78,48 @@ const ModalContainerData = styled('div')`
       height: 70%
     }
 `;
-export const CharacterInfoDialog = ({ isOpen, onClose, character }) => {
+export const CharacterInfoDialog = ({ isOpen, onClose, character ,onFavoriteClick ,favorite ,isShowFavorite}) => {
   const name = character ? character.name : marvelConstants.NOT_AVAILABLE;
   const comicsList = character && character.comicsList ? character.comicsList : [];
   return (
-    <ContainerStyled isOpen={isOpen} onClick={onClose} id={'modal-container'}>
+    <ContainerStyled isOpen={isOpen} onClick={onClose} id={marvelConstants.CONTAINER_MODAL_ID}>
       <ModalContainerStyled>
         <CloseButtonDialog onClose={onClose} />
         <CharacterNameStyled>{name}</CharacterNameStyled>
         <ModalContainerData>
           {comicsList.length ? (
             comicsList.map((comic, key) => {
-              return <ComicInfo comic={comic} key={key} />;
+              return <ComicInfo
+                comic={comic}
+                key={key}
+                onFavoriteClick={onFavoriteClick}
+                favorite={favorite}
+                isShowFavorite={isShowFavorite}
+              />;
             })
           ) : (
             <Loader />
           )}
+
         </ModalContainerData>
       </ModalContainerStyled>
     </ContainerStyled>
   );
 };
 
+
+CharacterInfoDialog.defaultProps = {
+  isShowFavorite:true,
+  favorite:{},
+  onFavoriteClick:null
+
+};
+
 CharacterInfoDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   character: PropTypes.object.isRequired,
+  onFavoriteClick: PropTypes.func,
+  favorite: PropTypes.object,
+  isShowFavorite:PropTypes.bool
 };
