@@ -8,7 +8,6 @@ import {marvelConstants} from '../shared/marvel.constants';
  * @returns {{}} Object.
  */
 export function getAllComics(state = {}, action) {
-  console.log('getAllComics', action);
   switch (action.type) {
   case marvelConstants.GET_ALL_COMICS_REQUEST:
     return {

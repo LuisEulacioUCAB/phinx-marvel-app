@@ -1,5 +1,4 @@
 import moment from 'moment';
-import * as R from 'ramda';
 
 /**
  * Reduce amount word on texts and add link for view comic details .

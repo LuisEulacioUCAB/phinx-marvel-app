@@ -16,7 +16,6 @@ const NameStyled = styled(Link)`
 `;
 
 const ComicName = ({ comic }) => {
-  console.log('ComicName', comic)
   return <NameStyled to={`/comic/${comic.id}`}>{comic.title}</NameStyled>;
 };
 
