@@ -1,11 +1,11 @@
 import { PropTypes } from 'prop-types';
 import React from 'react';
 import styled from '@emotion/styled';
-import { CharacterName } from './CharacterName';
 import {Favorite} from '../../../_components/Favorite';
 import {marvelConstants} from '../../../shared/marvel.constants';
+import {ComicName} from './ComicName';
 
-const CharacterInfoContainer = styled('div')`
+const ComicInfoContainer = styled('div')`
   background-image: ${(props) => (props.bgImg ? `url(${props.bgImg})` : '')};
   background-size: 100%;
   width: 100%;
@@ -15,39 +15,38 @@ const CharacterInfoContainer = styled('div')`
   background-size: cover;
 `;
 
-const CharacterInfo = ({ character, onFavoriteClick,favorite, isShowFavorite}) => {
-  const backgroundImage = character.thumbnail ? `${character.thumbnail.path}.${character.thumbnail.extension}` : '';
+const ComicInfo = ({ comic, onFavoriteClick,favorite, isShowFavorite}) => {
+  const backgroundImage = comic.thumbnail ? `${comic.thumbnail.path}.${comic.thumbnail.extension}` : '';
   return (
-    <CharacterInfoContainer bgImg={backgroundImage} id={marvelConstants.CONTAINER_CHARACTER_ID}>
+    <ComicInfoContainer bgImg={backgroundImage} id={marvelConstants.CONTAINER_CHARACTER_ID}>
       {
         isShowFavorite ? (
           <Favorite
-            type={marvelConstants.CHARACTER_TYPE}
+            type={marvelConstants.COMIC_TYPE}
             onFavoriteClick={onFavoriteClick}
-            data={character}
+            data={comic}
             favorite={favorite}
           />
         ) :null
       }
-
-      <CharacterName name={character.name} />
-    </CharacterInfoContainer>
+      <ComicName comic={comic} />
+    </ComicInfoContainer>
   );
 };
 
-CharacterInfo.defaultProps = {
+ComicInfo.defaultProps = {
   onFavoriteClick : null,
   favorite : {},
   isShowFavorite: true
 
 };
 
-CharacterInfo.propTypes = {
-  character: PropTypes.object.isRequired,
+ComicInfo.propTypes = {
+  comic: PropTypes.object.isRequired,
   favorite: PropTypes.object,
   onFavoriteClick: PropTypes.func,
   isShowFavorite:PropTypes.bool,
 
 };
 
-export { CharacterInfo };
+export { ComicInfo };

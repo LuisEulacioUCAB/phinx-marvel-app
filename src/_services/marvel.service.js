@@ -10,6 +10,7 @@ export const marvelService = {
   getAllCharacters,
   getComics,
   getComicDetails,
+  getAllComics
 };
 
 /**
@@ -24,10 +25,8 @@ function getAllCharacters(filter, offset, limit) {
   const requestOptions = {
     method: 'GET',
   };
-
   const query = generateFilterQuery(filter);
 
-  console.log('query', query);
   return fetch(
     URL +
       `/v1/public/characters?apikey=${API_PUBLIC_KEY}&ts=${TS}&hash=${HASH}&offset=${offset}&limit=${limit}` +
@@ -63,6 +62,8 @@ function handleResponse(response) {
   if (!response.ok) {
     return Promise.reject(response.json());
   }
+
+  console.log('handleResponse',response);
   return response.json();
 }
 
@@ -79,6 +80,26 @@ function getComicDetails(id) {
   //"http://gateway.marvel.com/v1/public/characters/1011334/comics"
   return fetch(
     URL + `/v1/public/comics/${id}?apikey=${API_PUBLIC_KEY}&ts=${TS}&hash=${HASH}`,
+    requestOptions,
+  ).then(handleResponse);
+}
+
+/**
+ * Get all comics.
+ *
+ * @param {object}filter - Filter by comic title.
+ * @param {number}offset - Offset.
+ * @param {number}limit - Limit.
+ * @returns {Promise<Response>} Promise.
+ */
+function getAllComics(filter, offset, limit) {
+  const requestOptions = {
+    method: 'GET',
+  };
+  const query = generateFilterQuery(filter);
+
+  return fetch(
+    URL + `/v1/public/comics?apikey=${API_PUBLIC_KEY}&ts=${TS}&hash=${HASH}&offset=${offset}&limit=${limit}` + query,
     requestOptions,
   ).then(handleResponse);
 }

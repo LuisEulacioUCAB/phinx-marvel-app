@@ -7,29 +7,23 @@ import { marvelConstants } from '../shared/marvel.constants';
  * @param {object}action - Actions.
  * @returns {{}} Object.
  */
-export function getallcharacters(state = {}, action) {
+export function getComicDetails(state = {}, action) {
   switch (action.type) {
-  case marvelConstants.GET_ALL_CHARACTERS_REQUEST:
+  case marvelConstants.GET_COMIC_DETAILS_REQUEST:
     return {
       loading: true,
-      data: {
-        characterList : [],
-        total:0
-      },
+      comic: [],
     };
-  case marvelConstants.GET_ALL_CHARACTERS_SUCCESS:
+  case marvelConstants.GET_COMIC_DETAILS_SUCCESS:
     return {
       loading: false,
-      data: action.data,
+      comic: action.comic,
     };
-  case marvelConstants.GET_ALL_CHARACTERS_FAILURE:
+  case marvelConstants.GET_COMIC_DETAILS_FAILURE:
     return {
       loading: false,
       error: action.error,
-      data: {
-        characterList : [],
-        total:0
-      },
+      comic: [],
     };
   default:
     return state;

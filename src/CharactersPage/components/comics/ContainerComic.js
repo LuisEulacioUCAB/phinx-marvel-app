@@ -1,17 +1,13 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { CharacterInfo } from './CharacterInfo';
 import styled from '@emotion/styled';
+import {ComicInfo} from './ComicInfo';
 
-const ContainerCharacterStyled = styled('div')`
+const ContainerContainerStyled = styled('div')`
   width: 22%;
   height: 350px;
   margin: 1.5%;
   display: inline-block;
-
-  &:hover {
-    cursor: pointer;
-  }
 
   @media screen and (max-width: 480px) {
     & {
@@ -35,33 +31,31 @@ const ContainerCharacterStyled = styled('div')`
   }
 `;
 
-const ContainerCharacter = ({ character, onClick , onFavoriteClick , favorite ,isShowFavorite}) => {
+const ContainerComic = ({ comic , onFavoriteClick , favorite ,isShowFavorite}) => {
   return (
-    <ContainerCharacterStyled onClick={(event) => onClick(event,character)}>
-      <CharacterInfo
-        character={character}
+    <ContainerContainerStyled>
+      <ComicInfo
+        comic={comic}
         onFavoriteClick={onFavoriteClick}
         favorite={favorite}
         isShowFavorite={isShowFavorite}
       />
-    </ContainerCharacterStyled>
+    </ContainerContainerStyled>
   );
 };
 
-ContainerCharacter.defaultProps = {
+ContainerComic.defaultProps = {
   onFavoriteClick : null,
   favorite : {},
   isShowFavorite: true
 
 };
 
-ContainerCharacter.propTypes = {
-  character: PropTypes.object.isRequired,
+ContainerComic.propTypes = {
+  comic: PropTypes.object.isRequired,
   favorite: PropTypes.object,
-  onClick: PropTypes.func.isRequired,
   onFavoriteClick: PropTypes.func,
   isShowFavorite:PropTypes.bool,
-
 };
 
-export { ContainerCharacter };
+export { ContainerComic };

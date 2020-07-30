@@ -2,7 +2,6 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { PropTypes } from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Tooltip } from './Tooltip';
 import {Link} from 'react-router-dom';
 
 const LinkStyled = styled(Link)`

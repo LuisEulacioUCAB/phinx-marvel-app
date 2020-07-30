@@ -1,4 +1,5 @@
 import moment from 'moment';
+import * as R from 'ramda';
 
 /**
  * Reduce amount word on texts and add link for view comic details .
@@ -35,6 +36,21 @@ export const generateFilterQuery = (filter) => {
 };
 
 /**
+ * Generate query simple query.
+ *
+ * @param {string}filter -  Filter.
+ * @returns {string} Query.
+ */
+export const generateQuery = (filter) =>{
+  let query = '';
+  if(typeof filter === 'string' && filter.length){
+    query += `&character=${filter}`;
+  }
+
+  return query;
+};
+
+/**
  * Get creator by role.
  *
  * @param {Array}creators - Creators Array.
@@ -65,4 +81,27 @@ export const getDate = (dates, type) => {
  */
 export const formatDate = (date, format) => {
   return moment(date).format(format);
+};
+
+/**
+ * Get data from local storage.
+ *
+ * @param {string}item - Item save on localstorage.
+ * @param {object}objectState - Object from state.
+ * @returns {any} Any.
+ */
+export const getObjectFromLocalStorage = (item, objectState) => {
+  return localStorage.getItem(item) ?
+    JSON.parse(localStorage.getItem(item)) :
+    objectState;
+};
+/**
+ * Set Data to localstorage.
+ *
+ * @param {string}item - Item save on localstorage.
+ * @param {object}objectState - Object from state.
+ */
+export const setObjectToLocalStorage = (item, objectState) => {
+  localStorage.setItem(item, objectState);
+
 };

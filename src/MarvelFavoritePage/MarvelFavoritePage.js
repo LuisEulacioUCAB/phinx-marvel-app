@@ -8,7 +8,7 @@ import { ContainerPrincipal } from '../_components/ContainerPrincipal';
 import { CharacterInfoDialog } from '../CharactersPage/components/dialog/CharacterInfoDialog';
 import { BackButton } from '../_components/BackButton';
 import { CharacterListView } from '../CharactersPage/components/characters/CharacterListView';
-import { ComicListView} from '../CharactersPage/components/comics/ComicListView';
+import { ComicListView} from './comics/ComicListView';
 import { marvelActions } from '../_actions/marvel.actions';
 import { marvelConstants } from '../shared/marvel.constants';
 
