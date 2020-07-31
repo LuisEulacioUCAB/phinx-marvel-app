@@ -14,7 +14,8 @@ const _ComicDetailsPageHooks = (props)=>{
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(marvelActions.getComicDetails(props.match.params.id));
-    setTimeout(()=>{setLoading(false)},3000);
+    setTimeout(()=>{setLoading(false);},3000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const comic = useSelector((store) =>store.getComicDetails.comic);

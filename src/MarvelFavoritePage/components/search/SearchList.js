@@ -32,7 +32,6 @@ const SearchList = ({searchList, history}) => {
     <div style={{paddingLeft:'6%',paddingRight:'6%'}}>
       {
         searchList.map((search, key) => {
-          console.log('search', search);
           const query = generateCustomFilterQuery(search);
           const url = '/' + query;
           return (
