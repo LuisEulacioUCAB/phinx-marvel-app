@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 const ContainerPrincipalStyled = styled('div')`
   height: 100vh;
+  background-color:#f5f5f5;
 `;
 
 const ContainerPrincipal = ({ children }) => {

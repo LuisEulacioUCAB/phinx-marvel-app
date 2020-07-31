@@ -7,7 +7,7 @@ import { marvelConstants } from '../shared/marvel.constants';
  * @param {object}action - Actions.
  * @returns {{}} Object.
  */
-export function getcomics(state = {}, action) {
+export function getComics(state = {}, action) {
   switch (action.type) {
   case marvelConstants.GET_COMICS_REQUEST:
     return {
@@ -19,8 +19,11 @@ export function getcomics(state = {}, action) {
     return {
       comicsList: [],
       error: action.error,
+      loading:false
     };
   default:
     return state;
   }
 }
+
+

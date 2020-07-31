@@ -1,12 +1,12 @@
-import React from 'react';
+import React  from 'react';
 import { marvelActions } from '../_actions/marvel.actions';
 import { connect } from 'react-redux';
 import { Loader } from '../_components/Loader';
 import { Header } from '../_components/Header';
 import { ComicDetailsView } from './components/ComicDetailsView';
 import { ContainerPrincipal } from '../_components/ContainerPrincipal';
-import { PropTypes } from 'prop-types';
-import { ButtonBack } from '../_components/ButtonBack';
+import  PropTypes  from 'prop-types';
+import { BackButton } from '../_components/BackButton';
 
 class ComicDetailsPage extends React.Component {
   constructor(props) {
@@ -23,8 +23,8 @@ class ComicDetailsPage extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps = (nextProps) => {
-    if (nextProps.getcomicdetails) {
-      const { comic, loading } = nextProps.getcomicdetails;
+    if (nextProps.getComicDetails) {
+      const { comic, loading } = nextProps.getComicDetails;
 
       const comicDetails = comic.length ? comic[comic.length - 1] : null;
       setTimeout(() => this.setState({ comic: comicDetails, loading }), 3000);
@@ -42,7 +42,7 @@ class ComicDetailsPage extends React.Component {
 
     return (
       <>
-        <Header childrenRight={<ButtonBack history={this.props.history} />} />
+        <Header childrenRight={<BackButton history={this.props.history} />} />
         <ContainerPrincipal>{content}</ContainerPrincipal>
       </>
     );
@@ -55,9 +55,9 @@ class ComicDetailsPage extends React.Component {
  * @returns {{getallcharacters: *, getcomics: *}} Reducers Object.
  */
 function mapStateToProps(state) {
-  const { getcomicdetails } = state;
+  const { getComicDetails } = state;
   return {
-    getcomicdetails,
+    getComicDetails,
   };
 }
 
@@ -65,7 +65,7 @@ const connectedApp = connect(mapStateToProps)(ComicDetailsPage);
 
 ComicDetailsPage.propTypes = {
   match: PropTypes.object.isRequired,
-  getcomicdetails: PropTypes.object.isRequired,
+  getComicDetails: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };

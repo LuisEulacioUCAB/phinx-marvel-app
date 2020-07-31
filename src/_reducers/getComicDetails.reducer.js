@@ -7,7 +7,7 @@ import { marvelConstants } from '../shared/marvel.constants';
  * @param {object}action - Actions.
  * @returns {{}} Object.
  */
-export function getcomicdetails(state = {}, action) {
+export function getComicDetails(state = {}, action) {
   switch (action.type) {
   case marvelConstants.GET_COMIC_DETAILS_REQUEST:
     return {
