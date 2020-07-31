@@ -1,35 +1,40 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import styled from '@emotion/styled';
-import {ComicInfo} from '../dialog/ComicInfo';
+import {ContainerComic} from './ContainerComic';
 
-const ContainerListStyled = styled('div')`
+const ContainerComicListStyled = styled('div')`
   padding-top: 150px;
   padding-left: 5%;
   padding-right: 5%;
 `;
 
-const ComicListView = ({ comicList, isShowFavorite}) => {
+const ComicListView = ({ comicsList, isShowFavorite , favorite, onFavoriteClick}) => {
   return (
-    <ContainerListStyled>
-      {comicList.map((comic, key) => {
-        return <ComicInfo
-          comic={comic}
-          key={key}
-          isShowFavorite={isShowFavorite}
-        />;
+    <ContainerComicListStyled>
+      {comicsList.map((comic, key) => {
+        return (
+          <ContainerComic
+            key={key}
+            comic={comic}
+            onFavoriteClick={onFavoriteClick}
+            favorite={favorite}
+            isShowFavorite={isShowFavorite} />);
       })}
-    </ContainerListStyled>
+    </ContainerComicListStyled>
   );
 };
 
 ComicListView.defaultProps = {
-  isShowFavorite:true,
+  onFavoriteClick : null,
+  favorite : {},
+  isShowFavorite: true
 };
 
 ComicListView.propTypes = {
-  comicList:PropTypes.array.isRequired,
+  comicsList: PropTypes.array.isRequired,
+  onFavoriteClick:PropTypes.func,
+  favorite:PropTypes.object,
   isShowFavorite:PropTypes.bool,
 };
-
 export { ComicListView };

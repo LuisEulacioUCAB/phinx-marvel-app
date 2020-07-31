@@ -23,8 +23,8 @@ class ComicDetailsPage extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps = (nextProps) => {
-    if (nextProps.getcomicdetails) {
-      const { comic, loading } = nextProps.getcomicdetails;
+    if (nextProps.getComicDetails) {
+      const { comic, loading } = nextProps.getComicDetails;
 
       const comicDetails = comic.length ? comic[comic.length - 1] : null;
       setTimeout(() => this.setState({ comic: comicDetails, loading }), 3000);
@@ -55,9 +55,9 @@ class ComicDetailsPage extends React.Component {
  * @returns {{getallcharacters: *, getcomics: *}} Reducers Object.
  */
 function mapStateToProps(state) {
-  const { getcomicdetails } = state;
+  const { getComicDetails } = state;
   return {
-    getcomicdetails,
+    getComicDetails,
   };
 }
 
@@ -65,7 +65,7 @@ const connectedApp = connect(mapStateToProps)(ComicDetailsPage);
 
 ComicDetailsPage.propTypes = {
   match: PropTypes.object.isRequired,
-  getcomicdetails: PropTypes.object.isRequired,
+  getComicDetails: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };

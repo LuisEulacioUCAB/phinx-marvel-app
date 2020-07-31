@@ -6,6 +6,7 @@ export const marvelActions = {
   getAllCharacters,
   getComics,
   getComicDetails,
+  getAllComics
 };
 
 /**
@@ -14,9 +15,11 @@ export const marvelActions = {
  * @param {object}filter - Filter.
  * @param {number}offset - Offset.
  * @param {number}limit - Limit.
+ * @param {string}character - Character.
+ * @param {object}comic - Comic.
  * @returns {function(...[*]=)} Dispatch Functions.
  */
-function getAllCharacters(filter, offset, limit) {
+function getAllCharacters(filter, offset, limit, character= '', comic = null) {
   return (dispatch) => {
     dispatch(request(filter));
     marvelService.getAllCharacters(filter, offset, limit).then(
@@ -175,4 +178,49 @@ function getComics(id) {
   function failure(error) {
     return { type: marvelConstants.GET_COMICS_FAILURE, error };
   }
+}
+
+/**
+ *
+ * @param filter
+ * @param offset
+ * @param limit
+ * @returns {function(...[*]=)}
+ */
+function getAllComics(filter, offset, limit) {
+
+  return (dispatch) => {
+    dispatch(request(filter));
+    marvelService.getAllComics(filter, offset, limit).then(
+      (comics) => {
+        const {
+          data: { results: comicsList}
+        } = comics;
+
+        const data = {
+          comicsList,
+          total: comics.data.total
+        };
+        dispatch(success(data));
+      },
+      (error) => {
+        dispatch(failure(error));
+        dispatch(alertActions.error(error));
+      }
+    );
+  };
+
+
+  function request(filter) {
+    return { type : marvelConstants.GET_ALL_COMICS_REQUEST, filter};
+  }
+
+  function success(data) {
+    return { type : marvelConstants.GET_ALL_COMICS_SUCCESS, data};
+  }
+
+  function failure(error) {
+    return { type : marvelConstants.GET_ALL_COMICS_FAILURE, error};
+  }
+
 }

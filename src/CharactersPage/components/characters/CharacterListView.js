@@ -2,7 +2,6 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import styled from '@emotion/styled';
 import { ContainerCharacter } from './ContainerCharacter';
-import { marvelConstants } from '../../../shared/marvel.constants';
 
 const ContainerListStyled = styled('div')`
   padding-top: 150px;

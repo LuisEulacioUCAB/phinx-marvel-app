@@ -3,6 +3,11 @@ export const marvelConstants = {
   GET_ALL_CHARACTERS_SUCCESS: 'GET_ALL_CHARACTERS_SUCCESS',
   GET_ALL_CHARACTERS_FAILURE: 'GET_ALL_CHARACTERS_FAILURE',
 
+  GET_ALL_COMICS_REQUEST: 'GET_ALL_COMICS_REQUEST',
+  GET_ALL_COMICS_SUCCESS: 'GET_ALL_COMICS_SUCCESS',
+  GET_ALL_COMICS_FAILURE: 'GET_ALL_COMICS_FAILURE',
+
+
   GET_COMICS_REQUEST: 'GET_COMICS_REQUEST',
   GET_COMICS_SUCCESS: 'GET_COMICS_SUCCESS',
   GET_COMICS_FAILURE: 'GET_COMICS_FAILURE',
@@ -21,8 +26,14 @@ export const marvelConstants = {
 
   CHARACTER_TYPE : 'character',
   COMIC_TYPE : 'comic',
+  URL_TYPE : 'url marvel',
 
   CLOSE_MODAL_ID : 'close-modal',
   CONTAINER_MODAL_ID : 'container-modal',
   CONTAINER_CHARACTER_ID : 'container-character',
 };
+
+export const searchOptions  =[
+  {value:marvelConstants.CHARACTER_TYPE, label:marvelConstants.CHARACTER_TYPE},
+  {value:marvelConstants.COMIC_TYPE, label:marvelConstants.COMIC_TYPE},
+];

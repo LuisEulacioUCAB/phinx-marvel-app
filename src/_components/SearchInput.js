@@ -1,8 +1,9 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
+import {  PropTypes } from 'prop-types';
 import styled from '@emotion/styled';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Select} from './Select';
 
 const ContainerSearchInputStyled = styled('div')`
   display: flex;
@@ -10,7 +11,7 @@ const ContainerSearchInputStyled = styled('div')`
 `;
 
 const InputSearchStyled = styled('input')`
-  width: 90%;
+  width: 75%;
   border: 1px solid #aaaaaa;
   padding-left: 10px;
   cursor: ${(props) => (props.disabled ? 'no-drop' : 'text')};
@@ -20,9 +21,8 @@ const InputSearchStyled = styled('input')`
 `;
 
 const ButtonSearchStyled = styled('button')`
-  width: 40px;
+  width: 50px;
   height: 40px;
-  margin-left: 15px;
   border: 1px solid #aaaaaa;
   background-color: white;
   cursor: ${(props) => (props.disabled ? 'no-drop' : 'pointer')};
@@ -31,25 +31,30 @@ const ButtonSearchStyled = styled('button')`
   &:focus {
     outline: none;
   }
+  
+  &:hover{
+    background-color:#aaaaaa;
+    color:white;
+  }
 
   @media (min-width: 481px) and (max-width: 768px) {
     & {
-      margin-left: 8px;
     }
   }
 `;
 
-const SearchInput = ({ onClick, value, onChange, disabled }) => {
+const SearchInput = ({ onClick, value, onChange, disabled , options, selectValue , onChangeSelect}) => {
   return (
     <ContainerSearchInputStyled>
       <InputSearchStyled
         type={'text'}
         value={value}
         onChange={onChange}
-        name={'nameStartsWith'}
+        name={'searchFilter'}
         placeholder={'Search'}
         disabled={disabled}
       />
+      <Select options={options} onChange={onChangeSelect} name={'searchType'} value={selectValue} disabled={disabled}/>
       <ButtonSearchStyled onClick={onClick} disabled={disabled}>
         <FontAwesomeIcon icon={faSearch} />
       </ButtonSearchStyled>
@@ -64,8 +69,11 @@ SearchInput.defaultProps = {
 SearchInput.propTypes = {
   onClick: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onChangeSelect: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
+  selectValue: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
 };
 
 export { SearchInput };
