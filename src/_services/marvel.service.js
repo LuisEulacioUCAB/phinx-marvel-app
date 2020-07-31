@@ -1,14 +1,10 @@
 import md5 from 'md5';
 import { generateFilterQuery } from '../shared/utils';
-const URL = 'https://gateway.marvel.com';
-const API_PUBLIC_KEY = '2ae8f7d92f077c6b782be319622fb631';
-const API_PRIVATE_KEY = '91f10b702389e9c12acbf79d205df2696ef86ce3';
-const TS = 1;
+const URL = process.env.REACT_APP_URL_MARVEL;
+const API_PUBLIC_KEY = process.env.REACT_APP_API_PUBLIC_KEY;
+const API_PRIVATE_KEY = process.env.REACT_APP_API_PRIVATE_KEY;
+const TS = process.env.REACT_APP_API_TS;
 const HASH = md5(`${TS}${API_PRIVATE_KEY}${API_PUBLIC_KEY}`);
-
-
-console.log('env', process.env);
-
 
 //For create hash visit https://www.md5hashgenerator.com/ and insert TS + API_PRIVATE_KEY + API_PUBLIC_KEY
 export const marvelService = {
