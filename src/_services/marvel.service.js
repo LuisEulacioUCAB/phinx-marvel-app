@@ -5,7 +5,11 @@ const API_PUBLIC_KEY = '2ae8f7d92f077c6b782be319622fb631';
 const API_PRIVATE_KEY = '91f10b702389e9c12acbf79d205df2696ef86ce3';
 const TS = 1;
 const HASH = md5(`${TS}${API_PRIVATE_KEY}${API_PUBLIC_KEY}`);
-console.log(process.env.URL_MARVEL)
+
+
+console.log('env', process.env);
+
+
 //For create hash visit https://www.md5hashgenerator.com/ and insert TS + API_PRIVATE_KEY + API_PUBLIC_KEY
 export const marvelService = {
   getAllCharacters,
