@@ -104,3 +104,22 @@ export const setObjectToLocalStorage = (item, objectState) => {
   localStorage.setItem(item, objectState);
 
 };
+
+
+/**
+ * Generate query for variables filter.
+ *
+ * @param {object}filter - Filter Query.
+ * @returns {string} Query.
+ */
+export const generateCustomFilterQuery = (filter) => {
+  let query = '';
+  Object.keys(filter).forEach((value) => {
+
+    if (filter[value].length || typeof filter[value] === 'number' ) {
+      query += query.length ? `&${value}=${filter[value]}` : `?${value}=${filter[value]}`;
+    }
+  });
+
+  return query;
+};

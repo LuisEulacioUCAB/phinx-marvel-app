@@ -1,10 +1,9 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import styled from '@emotion/styled';
-import {ComicInfo} from '../../CharactersPage/components/dialog/ComicInfo';
+import {ComicInfo} from '../../../CharactersPage/components/dialog/ComicInfo';
 
 const ContainerListStyled = styled('div')`
-  padding-top: 150px;
   padding-left: 5%;
   padding-right: 5%;
 `;

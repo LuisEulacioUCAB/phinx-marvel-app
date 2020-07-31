@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 import { ContainerCharacter } from './ContainerCharacter';
 
 const ContainerListStyled = styled('div')`
-  padding-top: 150px;
   padding-left: 5%;
   padding-right: 5%;
 `;

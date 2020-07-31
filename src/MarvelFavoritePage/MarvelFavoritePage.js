@@ -8,9 +8,10 @@ import { ContainerPrincipal } from '../_components/ContainerPrincipal';
 import { CharacterInfoDialog } from '../CharactersPage/components/dialog/CharacterInfoDialog';
 import { BackButton } from '../_components/BackButton';
 import { CharacterListView } from '../CharactersPage/components/characters/CharacterListView';
-import { ComicListView} from './comics/ComicListView';
+import { ComicListView} from './components/comics/ComicListView';
 import { marvelActions } from '../_actions/marvel.actions';
 import { marvelConstants } from '../shared/marvel.constants';
+import {SearchList} from './components/search/SearchList';
 
 class MarvelFavoritePage extends React.Component{
   constructor(props) {
@@ -21,7 +22,8 @@ class MarvelFavoritePage extends React.Component{
       isOpenCharacterInfoDialog: false,
       favorite :{
         comic: [],
-        character: []
+        character: [],
+        search: []
       },
       characterData: {
         name: '',
@@ -81,9 +83,9 @@ class MarvelFavoritePage extends React.Component{
 
   UNSAFE_componentWillReceiveProps = (nextProps) => {
 
-    if (nextProps.getcomics) {
+    if (nextProps.getComics) {
       const characterData = R.clone(this.state.characterData);
-      const { comicsList } = nextProps.getcomics;
+      const { comicsList } = nextProps.getComics;
       characterData.comicsList = comicsList;
       setTimeout(() => this.setState({ characterData }), 3000);
     }
@@ -91,21 +93,27 @@ class MarvelFavoritePage extends React.Component{
   render(){
 
     const {favorite, loading , isOpenCharacterInfoDialog, characterData} = this.state;
-    const {character:characterList, comic:comicList} = favorite;
+    const {character:characterList, comic:comicList , search:searchList} = favorite;
+    const {history} = this.props;
     let content = <Loader/>;
 
-    if (!loading && characterList.length) {
+    if (!loading && (characterList.length || comicList.length || searchList.length)) {
       content = (
         <>
-          <CharacterListView
-            onClick={this.onOpenCharacterInfoDialog}
-            characterList={characterList}
-            isShowFavorite={false}
-          />
-          <ComicListView
-            comicList={comicList}
-            isShowFavorite={false}
-          />
+          <div style={{paddingTop: '150px'}}>
+            <SearchList searchList={searchList} history={history}/>
+            <CharacterListView
+              onClick={this.onOpenCharacterInfoDialog}
+              characterList={characterList}
+              isShowFavorite={false}
+              style={{paddingTop:0}}
+            />
+            <ComicListView
+              comicList={comicList}
+              isShowFavorite={false}
+            />
+          </div>
+
         </>
       );
     }
@@ -136,14 +144,14 @@ class MarvelFavoritePage extends React.Component{
  * @returns {{getallcharacters: *, getcomics: *}} Reducers Object.
  */
 function mapStateToProps(state) {
-  const { getcomics } = state;
+  const { getComics } = state;
   return {
-    getcomics,
+    getComics,
   };
 }
 
 MarvelFavoritePage.propTypes = {
-  getcomics: PropTypes.object.isRequired,
+  getComics: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   history:PropTypes.object.isRequired
 };

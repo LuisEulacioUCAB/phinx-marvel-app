@@ -12,11 +12,12 @@ import PropTypes  from 'prop-types';
 import {PaginationComponent} from '../_components/PaginationComponent';
 import {marvelConstants} from '../shared/marvel.constants';
 import {faStar} from '@fortawesome/free-solid-svg-icons';
-import {ActionButton} from '../_components/ActionButton';
 import {searchOptions} from '../shared/marvel.constants';
 import queryString from 'query-string';
 import {ComicListView} from './components/comics/ComicListView';
 import {getObjectFromLocalStorage , setObjectToLocalStorage} from '../shared/utils';
+import {DialogFavorite} from '../_components/dialog-favorite/DialogFavorite';
+import { errors, success } from '../_components/toast';
 
 class CharactersPage extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class CharactersPage extends React.Component {
       loading: true,
       disabledSearch: true,
       isOpenCharacterInfoDialog: false,
+      isOpenFavoriteDialog: false,
       searchFilter: '',
       offset: 0,
       limit: 20,
@@ -42,7 +44,8 @@ class CharactersPage extends React.Component {
       total:0,
       favorite :{
         comic: [],
-        character: []
+        character: [],
+        search: []
       }
     };
 
@@ -52,17 +55,16 @@ class CharactersPage extends React.Component {
   componentDidMount = () => {
 
     const searchParams = queryString.parse(this.props.location.search);
-
-    const {character, comic} = searchParams;
-
     const { limit } = this.state;
-
-
-    const currentPageCharacters = getObjectFromLocalStorage('currentPageCharacters', R.clone(this.state.currentPageCharacters));
-    const currentPageComics = getObjectFromLocalStorage('currentPageComics', R.clone(this.state.currentPageComics));
+    const currentPageCharacters = !searchParams.currentPageCharacters ?
+      getObjectFromLocalStorage('currentPageCharacters', R.clone(this.state.currentPageCharacters)) :
+      parseInt(searchParams.currentPageCharacters);
+    const currentPageComics = !searchParams.currentPageComics ?
+      getObjectFromLocalStorage('currentPageComics', R.clone(this.state.currentPageComics)) :
+      parseInt(searchParams.currentPageComics);
     const favorite = getObjectFromLocalStorage('favorite', R.clone(this.state.favorite));
-    const searchType = getObjectFromLocalStorage('searchType', R.clone(this.state.searchType));
-    const searchFilter = getObjectFromLocalStorage('searchFilter', R.clone(this.state.searchFilter));
+    const searchType = !searchParams.searchType ? getObjectFromLocalStorage('searchType', R.clone(this.state.searchType)) :searchParams.searchType;
+    const searchFilter = !searchParams.searchFilter ? getObjectFromLocalStorage('searchFilter', R.clone(this.state.searchFilter)) : searchParams.searchFilter;
     const currentPage = searchType === marvelConstants.CHARACTER_TYPE ? currentPageCharacters : currentPageComics;
     const offset = currentPage ? ( currentPage - 1) * limit : R.clone(this.state.offset);
 
@@ -185,30 +187,62 @@ class CharactersPage extends React.Component {
       this.setState({currentPageComics, loading}, ()=>this.props.dispatch(marvelActions.getAllComics({titleStartsWith}, offset, limit)));
       setObjectToLocalStorage('currentPageComics', currentPageComics);
     }
-
-
-
-
   };
 
 
   onFavoriteClick = (data, type) => {
     const favorite = getObjectFromLocalStorage('favorite', R.clone(this.state.favorite));
-
+    const {searchType} = this.state;
     const findObj = favorite[type].find((fav) => fav.id === data.id);// For dont repeat favorite
 
     if(!findObj){
       favorite[type].push(data);
 
+      const toastSuccessText = searchType === marvelConstants.COMIC_TYPE ? `
+        The Comic: ${data.title} is added to favorites
+      `: `The ${data.name ? 'Character: ': 'Comic: '}${data.name ? data.name : data.title} is added to favorites`;
+      success(toastSuccessText);
     }else{
       const pos = favorite[type].findIndex((fav) => fav.id === data.id);
       favorite[type] = favorite[type].slice(0,pos);
-
+      const toastErrorText = searchType === marvelConstants.COMIC_TYPE ? `
+        The Comic: ${data.title} is removed to favorites
+      `: `The ${data.name ? 'Character: ': 'Comic: '}${data.name ? data.name : data.title} is removed to favorites`;
+      errors(toastErrorText);
     }
 
     setObjectToLocalStorage('favorite', JSON.stringify(favorite));
     this.setState({favorite});
   };
+
+  onClickFavoriteDialog = () =>{
+    const {isOpenFavoriteDialog} = this.state;
+    this.setState({isOpenFavoriteDialog:!isOpenFavoriteDialog});
+  };
+
+  onClickAddFavoriteSearch = () =>{
+    const {searchFilter, searchType , isOpenFavoriteDialog} = this.state;
+    const favorite = getObjectFromLocalStorage('favorite', R.clone(this.state.favorite));
+
+    const findObject = favorite['search'].find((search) => search.searchFilter === searchFilter && search.searchType);
+    if(!findObject){
+
+      if(searchType === marvelConstants.COMIC_TYPE){
+        const {currentPageComics } = this.state;
+        favorite['search'].push({searchFilter, searchType, currentPageComics});
+      }else{
+        const {currentPageCharacters } = this.state;
+        favorite['search'].push({searchFilter, searchType, currentPageCharacters});
+      }
+
+      success(`Add filter search to favorites`);
+    }else{
+      errors('This search its already in favorites');
+    }
+    setObjectToLocalStorage('favorite', JSON.stringify(favorite));
+    this.setState({favorite, isOpenFavoriteDialog:!isOpenFavoriteDialog});
+  };
+
 
   render() {
     const {
@@ -224,7 +258,8 @@ class CharactersPage extends React.Component {
       comicsList,
       currentPageCharacters,
       currentPageComics,
-      disabledSearch
+      disabledSearch,
+      isOpenFavoriteDialog
     } = this.state;
     const currentPage = searchType === marvelConstants.CHARACTER_TYPE ? currentPageCharacters : currentPageComics;
 
@@ -233,13 +268,14 @@ class CharactersPage extends React.Component {
     if (!loading && characterList.length) {
       content = (
         <>
-          <CharacterListView
-            onClick={this.onOpenCharacterInfoDialog}
-            characterList={characterList}
-            onFavoriteClick={this.onFavoriteClick}
-            favorite={favorite}
-          />
-
+          <div style={{paddingTop: '150px'}}>
+            <CharacterListView
+              onClick={this.onOpenCharacterInfoDialog}
+              characterList={characterList}
+              onFavoriteClick={this.onFavoriteClick}
+              favorite={favorite}
+            />
+          </div>
         </>
       );
     }
@@ -264,7 +300,14 @@ class CharactersPage extends React.Component {
     return (
       <>
         <Header
-          childrenRight={<ActionButton text={'Favorite'} link={'/favorite'} fontIcon={faStar}/>}
+          childrenRight={
+            <DialogFavorite
+              fontIcon={faStar}
+              isOpen={isOpenFavoriteDialog}
+              onClick={this.onClickFavoriteDialog}
+              onClickAddFavoriteSearch={this.onClickAddFavoriteSearch}
+            />
+          }
         >
           <SearchInput
             options={searchOptions}

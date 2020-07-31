@@ -1,11 +1,11 @@
-import React from 'react';
+import React  from 'react';
 import { marvelActions } from '../_actions/marvel.actions';
 import { connect } from 'react-redux';
 import { Loader } from '../_components/Loader';
 import { Header } from '../_components/Header';
 import { ComicDetailsView } from './components/ComicDetailsView';
 import { ContainerPrincipal } from '../_components/ContainerPrincipal';
-import { PropTypes } from 'prop-types';
+import  PropTypes  from 'prop-types';
 import { BackButton } from '../_components/BackButton';
 
 class ComicDetailsPage extends React.Component {

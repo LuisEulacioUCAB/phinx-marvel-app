@@ -1,8 +1,18 @@
 import { alertConstants } from '../shared/alert.constants';
+import {errors} from '../_components/toast';
+import {success as toastSuccess} from '../_components/toast';
 
 export const alertActions = {
   error,
+  clear,
+  success
 };
+
+function success(message) {
+  toastSuccess(message);
+  return { type: alertConstants.SUCCESS, message };
+}
+
 
 /**
  * Show error message.
@@ -23,7 +33,10 @@ function error(message) {
   } else {
     error = String(message);
   }
+  errors(error);
+  return { type: alertConstants.ERROR, message:error };
+}
 
-  console.log('error', error);
-  return { type: alertConstants.ERROR, error };
+function clear() {
+  return { type: alertConstants.CLEAR };
 }
